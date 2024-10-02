@@ -1,24 +1,47 @@
-import logo from './logo.svg';
 import './App.css';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import GlobalStyle from './components/GlobalStyles';
+import { PostProvider } from './context/PostContext';
+import Header from './components/Header';
+import { Body } from './components/Body';
+import { ProfessorProvider } from './context/ProfessorContext';
+import { LoginScreen } from './screen/LoginScreen';
+import { CreatePostScreen } from './screen/CreatePostScreen';
+import { EditPostScreen } from './screen/EditPostScreen';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <GlobalStyle />
+      <ProfessorProvider>
+        <PostProvider>
+          <Routes>
+            <Route path='/' element={
+              <>
+                <Header />
+                <Body />
+              </>
+            }
+            />
+            <Route path='/login' element={
+              <LoginScreen />
+            }/>
+            <Route path='/create' element={
+              <>
+                <Header />
+                <CreatePostScreen />
+              </>
+            }/>
+            <Route path='/edit' element={
+              <>
+                <Header />
+                <EditPostScreen />
+              </>
+            }/>
+          </Routes>
+        </PostProvider>
+      </ProfessorProvider>
+    </Router>
   );
 }
 
